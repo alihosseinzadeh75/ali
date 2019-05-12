@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SensorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="database" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="SensorModel.sysdiagram" />
+    <EntitySet Name="tbl_base" EntityType="SensorModel.tbl_base" />
+    <EntitySet Name="tbl_logininformation" EntityType="SensorModel.tbl_logininformation" />
+    <EntitySet Name="tbl_sensorinformation" EntityType="SensorModel.tbl_sensorinformation" />
+    <EntitySet Name="tbl_sensors" EntityType="SensorModel.tbl_sensors" />
+    <EntitySet Name="tbl_types" EntityType="SensorModel.tbl_types" />
+    <EntitySet Name="tbl_users" EntityType="SensorModel.tbl_users" />
+    <AssociationSet Name="FK_tbl_sensors_tbl_base" Association="SensorModel.FK_tbl_sensors_tbl_base">
+      <End Role="tbl_base" EntitySet="tbl_base" />
+      <End Role="tbl_sensors" EntitySet="tbl_sensors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_logininformation_tbl_users" Association="SensorModel.FK_tbl_logininformation_tbl_users">
+      <End Role="tbl_users" EntitySet="tbl_users" />
+      <End Role="tbl_logininformation" EntitySet="tbl_logininformation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_sensorinformation_tbl_sensors" Association="SensorModel.FK_tbl_sensorinformation_tbl_sensors">
+      <End Role="tbl_sensors" EntitySet="tbl_sensors" />
+      <End Role="tbl_sensorinformation" EntitySet="tbl_sensorinformation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_sensorinformation_tbl_users" Association="SensorModel.FK_tbl_sensorinformation_tbl_users">
+      <End Role="tbl_users" EntitySet="tbl_users" />
+      <End Role="tbl_sensorinformation" EntitySet="tbl_sensorinformation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_sensors_tbl_types" Association="SensorModel.FK_tbl_sensors_tbl_types">
+      <End Role="tbl_types" EntitySet="tbl_types" />
+      <End Role="tbl_sensors" EntitySet="tbl_sensors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_sensors_tbl_users" Association="SensorModel.FK_tbl_sensors_tbl_users">
+      <End Role="tbl_users" EntitySet="tbl_users" />
+      <End Role="tbl_sensors" EntitySet="tbl_sensors" />
+    </AssociationSet>
+    <EntitySet Name="tbl_setting" EntityType="SensorModel.tbl_setting" />
+  </EntityContainer>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tbl_base">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Base" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="tbl_sensors" Relationship="SensorModel.FK_tbl_sensors_tbl_base" FromRole="tbl_base" ToRole="tbl_sensors" />
+  </EntityType>
+  <EntityType Name="tbl_logininformation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Time" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tbl_users" Relationship="SensorModel.FK_tbl_logininformation_tbl_users" FromRole="tbl_logininformation" ToRole="tbl_users" />
+  </EntityType>
+  <EntityType Name="tbl_sensorinformation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="SensorID" Type="Int32" Nullable="false" />
+    <Property Name="BaseID_ago" Type="Int32" Nullable="false" />
+    <Property Name="BaseID_new" Type="Int32" Nullable="false" />
+    <Property Name="TypeID_ago" Type="Int32" Nullable="false" />
+    <Property Name="TypeID_new" Type="Int32" Nullable="false" />
+    <Property Name="x_ago" Type="Double" Nullable="false" />
+    <Property Name="x_new" Type="Double" Nullable="false" />
+    <Property Name="y_ago" Type="Double" Nullable="false" />
+    <Property Name="y_new" Type="Double" Nullable="false" />
+    <Property Name="State_ago" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="State_new" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="tbl_sensors" Relationship="SensorModel.FK_tbl_sensorinformation_tbl_sensors" FromRole="tbl_sensorinformation" ToRole="tbl_sensors" />
+    <NavigationProperty Name="tbl_users" Relationship="SensorModel.FK_tbl_sensorinformation_tbl_users" FromRole="tbl_sensorinformation" ToRole="tbl_users" />
+  </EntityType>
+  <EntityType Name="tbl_sensors">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="BaseID" Type="Int32" Nullable="false" />
+    <Property Name="TypeID" Type="Int32" Nullable="false" />
+    <Property Name="x" Type="Double" Nullable="false" />
+    <Property Name="y" Type="Double" Nullable="false" />
+    <Property Name="State" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tbl_base" Relationship="SensorModel.FK_tbl_sensors_tbl_base" FromRole="tbl_sensors" ToRole="tbl_base" />
+    <NavigationProperty Name="tbl_sensorinformation" Relationship="SensorModel.FK_tbl_sensorinformation_tbl_sensors" FromRole="tbl_sensors" ToRole="tbl_sensorinformation" />
+    <NavigationProperty Name="tbl_types" Relationship="SensorModel.FK_tbl_sensors_tbl_types" FromRole="tbl_sensors" ToRole="tbl_types" />
+    <NavigationProperty Name="tbl_users" Relationship="SensorModel.FK_tbl_sensors_tbl_users" FromRole="tbl_sensors" ToRole="tbl_users" />
+  </EntityType>
+  <EntityType Name="tbl_types">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="tbl_sensors" Relationship="SensorModel.FK_tbl_sensors_tbl_types" FromRole="tbl_types" ToRole="tbl_sensors" />
+  </EntityType>
+  <EntityType Name="tbl_users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Access" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Family" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NatCode" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="Mobile" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Shire" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PostalCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="tbl_logininformation" Relationship="SensorModel.FK_tbl_logininformation_tbl_users" FromRole="tbl_users" ToRole="tbl_logininformation" />
+    <NavigationProperty Name="tbl_sensorinformation" Relationship="SensorModel.FK_tbl_sensorinformation_tbl_users" FromRole="tbl_users" ToRole="tbl_sensorinformation" />
+    <NavigationProperty Name="tbl_sensors" Relationship="SensorModel.FK_tbl_sensors_tbl_users" FromRole="tbl_users" ToRole="tbl_sensors" />
+  </EntityType>
+  <Association Name="FK_tbl_sensors_tbl_base">
+    <End Type="SensorModel.tbl_base" Role="tbl_base" Multiplicity="1" />
+    <End Type="SensorModel.tbl_sensors" Role="tbl_sensors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_base">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_sensors">
+        <PropertyRef Name="BaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_logininformation_tbl_users">
+    <End Type="SensorModel.tbl_users" Role="tbl_users" Multiplicity="1" />
+    <End Type="SensorModel.tbl_logininformation" Role="tbl_logininformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_logininformation">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_sensorinformation_tbl_sensors">
+    <End Type="SensorModel.tbl_sensors" Role="tbl_sensors" Multiplicity="1" />
+    <End Type="SensorModel.tbl_sensorinformation" Role="tbl_sensorinformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_sensors">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_sensorinformation">
+        <PropertyRef Name="SensorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_sensorinformation_tbl_users">
+    <End Type="SensorModel.tbl_users" Role="tbl_users" Multiplicity="1" />
+    <End Type="SensorModel.tbl_sensorinformation" Role="tbl_sensorinformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_sensorinformation">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_sensors_tbl_types">
+    <End Type="SensorModel.tbl_types" Role="tbl_types" Multiplicity="1" />
+    <End Type="SensorModel.tbl_sensors" Role="tbl_sensors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_types">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_sensors">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_sensors_tbl_users">
+    <End Type="SensorModel.tbl_users" Role="tbl_users" Multiplicity="1" />
+    <End Type="SensorModel.tbl_sensors" Role="tbl_sensors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_sensors">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tbl_setting">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CountProductInPage" Type="Int32" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="EmailPass" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SMTP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

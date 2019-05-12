@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SensorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tbl_base">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Base" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_logininformation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Time" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_sensorinformation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="SensorID" Type="int" Nullable="false" />
+    <Property Name="BaseID_ago" Type="int" Nullable="false" />
+    <Property Name="BaseID_new" Type="int" Nullable="false" />
+    <Property Name="TypeID_ago" Type="int" Nullable="false" />
+    <Property Name="TypeID_new" Type="int" Nullable="false" />
+    <Property Name="x_ago" Type="float" Nullable="false" />
+    <Property Name="x_new" Type="float" Nullable="false" />
+    <Property Name="y_ago" Type="float" Nullable="false" />
+    <Property Name="y_new" Type="float" Nullable="false" />
+    <Property Name="State_ago" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="State_new" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_sensors">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="BaseID" Type="int" Nullable="false" />
+    <Property Name="TypeID" Type="int" Nullable="false" />
+    <Property Name="x" Type="float" Nullable="false" />
+    <Property Name="y" Type="float" Nullable="false" />
+    <Property Name="State" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_setting">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" />
+    <Property Name="CountProductInPage" Type="int" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+    <Property Name="EmailPass" Type="nvarchar" MaxLength="100" />
+    <Property Name="SMTP" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tbl_types">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Access" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Family" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NatCode" Type="nvarchar" MaxLength="12" Nullable="false" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="12" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" />
+    <Property Name="Shire" Type="nvarchar" MaxLength="50" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="PostalCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_tbl_logininformation_tbl_users">
+    <End Role="tbl_users" Type="Self.tbl_users" Multiplicity="1" />
+    <End Role="tbl_logininformation" Type="Self.tbl_logininformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_logininformation">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_sensorinformation_tbl_sensors">
+    <End Role="tbl_sensors" Type="Self.tbl_sensors" Multiplicity="1" />
+    <End Role="tbl_sensorinformation" Type="Self.tbl_sensorinformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_sensors">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_sensorinformation">
+        <PropertyRef Name="SensorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_sensorinformation_tbl_users">
+    <End Role="tbl_users" Type="Self.tbl_users" Multiplicity="1" />
+    <End Role="tbl_sensorinformation" Type="Self.tbl_sensorinformation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_sensorinformation">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_sensors_tbl_base">
+    <End Role="tbl_base" Type="Self.tbl_base" Multiplicity="1" />
+    <End Role="tbl_sensors" Type="Self.tbl_sensors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_base">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_sensors">
+        <PropertyRef Name="BaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_sensors_tbl_types">
+    <End Role="tbl_types" Type="Self.tbl_types" Multiplicity="1" />
+    <End Role="tbl_sensors" Type="Self.tbl_sensors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_types">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_sensors">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_sensors_tbl_users">
+    <End Role="tbl_users" Type="Self.tbl_users" Multiplicity="1" />
+    <End Role="tbl_sensors" Type="Self.tbl_sensors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_sensors">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SensorModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_base" EntityType="Self.tbl_base" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_logininformation" EntityType="Self.tbl_logininformation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_sensorinformation" EntityType="Self.tbl_sensorinformation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_sensors" EntityType="Self.tbl_sensors" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_setting" EntityType="Self.tbl_setting" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_types" EntityType="Self.tbl_types" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_users" EntityType="Self.tbl_users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tbl_logininformation_tbl_users" Association="Self.FK_tbl_logininformation_tbl_users">
+      <End Role="tbl_users" EntitySet="tbl_users" />
+      <End Role="tbl_logininformation" EntitySet="tbl_logininformation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_sensorinformation_tbl_sensors" Association="Self.FK_tbl_sensorinformation_tbl_sensors">
+      <End Role="tbl_sensors" EntitySet="tbl_sensors" />
+      <End Role="tbl_sensorinformation" EntitySet="tbl_sensorinformation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_sensorinformation_tbl_users" Association="Self.FK_tbl_sensorinformation_tbl_users">
+      <End Role="tbl_users" EntitySet="tbl_users" />
+      <End Role="tbl_sensorinformation" EntitySet="tbl_sensorinformation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_sensors_tbl_base" Association="Self.FK_tbl_sensors_tbl_base">
+      <End Role="tbl_base" EntitySet="tbl_base" />
+      <End Role="tbl_sensors" EntitySet="tbl_sensors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_sensors_tbl_types" Association="Self.FK_tbl_sensors_tbl_types">
+      <End Role="tbl_types" EntitySet="tbl_types" />
+      <End Role="tbl_sensors" EntitySet="tbl_sensors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_sensors_tbl_users" Association="Self.FK_tbl_sensors_tbl_users">
+      <End Role="tbl_users" EntitySet="tbl_users" />
+      <End Role="tbl_sensors" EntitySet="tbl_sensors" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

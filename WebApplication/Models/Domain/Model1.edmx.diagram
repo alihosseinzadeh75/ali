@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="95765a9f3e8f407283edf089549c8fbf" Name="Diagram1">
+        <EntityTypeShape EntityType="SensorModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SensorModel.tbl_base" Width="1.5" PointX="3.75" PointY="1.5" />
+        <EntityTypeShape EntityType="SensorModel.tbl_logininformation" Width="1.5" PointX="3" PointY="14.5" />
+        <EntityTypeShape EntityType="SensorModel.tbl_sensorinformation" Width="1.5" PointX="3" PointY="4.625" />
+        <EntityTypeShape EntityType="SensorModel.tbl_sensors" Width="1.5" PointX="6" PointY="5.125" />
+        <EntityTypeShape EntityType="SensorModel.tbl_types" Width="1.5" PointX="3.75" PointY="10.125" />
+        <EntityTypeShape EntityType="SensorModel.tbl_users" Width="1.5" PointX="0.75" PointY="4.625" />
+        <AssociationConnector Association="SensorModel.FK_tbl_sensors_tbl_base" />
+        <AssociationConnector Association="SensorModel.FK_tbl_logininformation_tbl_users" />
+        <AssociationConnector Association="SensorModel.FK_tbl_sensorinformation_tbl_sensors" />
+        <AssociationConnector Association="SensorModel.FK_tbl_sensorinformation_tbl_users" />
+        <AssociationConnector Association="SensorModel.FK_tbl_sensors_tbl_types" />
+        <AssociationConnector Association="SensorModel.FK_tbl_sensors_tbl_users" />
+        <EntityTypeShape EntityType="SensorModel.tbl_setting" Width="1.5" PointX="6.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

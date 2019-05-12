@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+@{
+    WebApplication.Models.Domain.database db = new WebApplication.Models.Domain.database();
+    var setting = (from a in db.tbl_setting
+                   select a).FirstOrDefault();
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - @setting.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                @Html.ActionLink(setting.Title, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                    @{
+                        if (Session["username"] == null)
+                        {
+                            <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                        }
+                        else
+                        {
+
+                            if (Session["access"].ToString() == "admin")
+                            {
+                                <li>@Html.ActionLink("Users Management", "Users_manegement", "User")</li>
+                                <li>@Html.ActionLink("Login information", "Login_info", "User")</li>
+                                <li>@Html.ActionLink("Sensor Management", "Sensor_management", "User")</li>
+                                <li>@Html.ActionLink("Sensor information", "Sensor_information", "User")</li>
+                                <li>@Html.ActionLink("Setting", "Setting", "User")</li>
+                            }
+                            else
+                            {
+
+                            }
+                            <li>@Html.ActionLink("Edit Profile", "Edit_pro", "User")</li>
+
+                            <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+
+                        }
+
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Sensor Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

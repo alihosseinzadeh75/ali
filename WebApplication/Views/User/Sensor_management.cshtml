@@ -1,0 +1,94 @@
+﻿@model IEnumerable<WebApplication.Models.Domain.tbl_sensors>
+
+@{
+    ViewBag.Title = "Sensor management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Sensor management</h2>
+
+<br />
+<p>
+    @Html.ActionLink("Create New Sensor", "CreateSensor")
+</p>
+
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BaseID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TypeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.x)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.y)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_base.Base)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_types.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.x)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.y)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Editsens", new { id = item.ID })
+                @*@Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+
+<script>
+    function Paging(PageNo) {
+        document.getElementById("PageID").value = PageNo;
+        SubmitForm();
+    }
+</script>
+<div id="Paging">
+    <center>
+
+        @{
+            decimal AllProduct = ViewBag.CountPoduct;
+            decimal Take = ViewBag.Take;
+            for (int i = 1; i <= Math.Ceiling((decimal)(AllProduct / Take)); i++)
+            {
+                <a style="color:black;" href="~/User/Sensor_management/?Page=@i.ToString()">@i.ToString()</a>
+            }
+        }
+
+    </center>
+</div>
+

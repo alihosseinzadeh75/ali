@@ -1,0 +1,97 @@
+﻿@model IEnumerable<WebApplication.Models.Domain.tbl_logininformation>
+
+@{
+    ViewBag.Title = "Login information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login information</h2>
+
+<br />
+
+<form action="~/User/Login_info" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate form form-inline" novalidate style="text-align:left;">
+    <div class="mc-field-group">
+        <input type="number" value="" placeholder="search by user id ..." name="userid" id="username" style="width:200px;">
+        <br />
+        <br />
+        <input type="submit" value="Search" name="Search" id="mc-embedded-subscribe" class="btn btn-primary" style="width:200px;">
+    </div>
+</form>
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Family
+        </th>
+        <th>
+            National Code
+        </th>
+        <th>
+            Mobile Number
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_users.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_users.Family)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_users.NatCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_users.Mobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<script>
+                    function Paging(PageNo) {
+                        document.getElementById("PageID").value = PageNo;
+                        SubmitForm();
+                    }
+</script>
+<div id="Paging">
+    <center>
+
+            @{
+                decimal AllProduct = ViewBag.CountPoduct;
+                decimal Take = ViewBag.Take;
+                for (int i = 1; i <= Math.Ceiling((decimal)(AllProduct / Take)); i++)
+                {
+                    <a style="color:black;" href="~/User/Login_info/?Page=@i.ToString()">@i.ToString()</a>
+                }
+            }
+
+    </center>
+</div>

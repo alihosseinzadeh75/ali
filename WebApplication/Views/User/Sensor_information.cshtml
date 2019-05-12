@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WebApplication.Models.Domain.tbl_sensorinformation>
+
+@{
+    ViewBag.Title = "Sensor information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Sensor information</h2>
+
+<br />
+
+<form action="~/User/Sensor_information" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate form form-inline" novalidate style="text-align:left;">
+    <div class="mc-field-group">
+        <input type="number" value="" placeholder="search by sensor id ..." name="sensorid" id="sensorid" style="width:200px;">
+        <br />
+        <br />
+        <input type="submit" value="Search" name="Search" id="mc-embedded-subscribe" class="btn btn-primary" style="width:200px;">
+    </div>
+</form>
+<br />
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SensorID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SensorID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.ActionLink("Details Information", "DetailsSensor", new { id = item.ID }) 
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+<script>
+    function Paging(PageNo) {
+        document.getElementById("PageID").value = PageNo;
+        SubmitForm();
+    }
+</script>
+<div id="Paging">
+    <center>
+
+        @{
+            decimal AllProduct = ViewBag.CountPoduct;
+            decimal Take = ViewBag.Take;
+            for (int i = 1; i <= Math.Ceiling((decimal)(AllProduct / Take)); i++)
+            {
+                <a style="color:black;" href="~/User/Sensor_information/?Page=@i.ToString()">@i.ToString()</a>
+            }
+        }
+
+    </center>
+</div>

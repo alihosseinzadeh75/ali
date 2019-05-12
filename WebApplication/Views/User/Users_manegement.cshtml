@@ -1,0 +1,85 @@
+﻿@model IEnumerable<WebApplication.Models.Domain.tbl_users>
+
+@{
+    ViewBag.Title = "Users manegement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Users manegement</h2>
+<br />
+<p>
+    @Html.ActionLink("Create New User", "CreateUser")
+</p>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Family)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        string Style = "";
+        if (item.Status == false)
+        { Style = "background-color:#ffd800;"; }
+        <tr style="@Style">
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Family)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+
+                @Html.ActionLink("Details", "DetailsUser", new { id = item.ID }) |
+                @{if (item.Status == true)
+                    { <span>@Html.ActionLink("Disable", "DisableUser", new { id = item.ID })</span>}
+                else
+                { <span>@Html.ActionLink("Enable", "EnableUser", new { id = item.ID })</span>}
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+<script>
+                    function Paging(PageNo) {
+                        document.getElementById("PageID").value = PageNo;
+                        SubmitForm();
+                    }
+</script>
+<div id="Paging">
+    <center>
+
+        @{
+            decimal AllProduct = ViewBag.CountPoduct;
+            decimal Take = ViewBag.Take;
+            for (int i = 1; i <= Math.Ceiling((decimal)(AllProduct / Take)); i++)
+            {
+                <a style="color:black;" href="~/User/Users_management/?Page=@i.ToString()">@i.ToString()</a>
+            }
+        }
+
+    </center>
+</div>
+

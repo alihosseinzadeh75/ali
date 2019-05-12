@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="text-align:center;">Login</h2>
+
+<br />
+
+<form action="~/Home/Login" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate form form-inline"  novalidate style="text-align:center;">
+    <div class="mc-field-group">
+        <input type="text" value="" placeholder="Username ..." name="username" id="username" style="width:200px;">
+        <br />
+        <br />
+        <input type="password" value="" placeholder="Password ..." name="password" id="password" style="width:200px;">
+        <br />
+        <br />
+        <input type="submit" value="Login" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary" style="width:200px;">
+    </div>
+</form>
+<br />
+<div style="text-align:center;padding:5px;@ViewBag.style">
+    @ViewBag.Message
+</div>
